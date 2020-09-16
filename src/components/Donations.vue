@@ -32,7 +32,7 @@ export default {
     donations: db.collection('donations')
   },
   created() {
-    this.$bind('donations', db.collection('donations'))
+    this.$bind('donations', db.collection('donations').orderBy('created_at', 'desc'))
       .then(donations => this.donations = donations)
       .catch(err => console.log(err));
   }

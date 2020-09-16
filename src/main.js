@@ -5,6 +5,9 @@ import router from './router'
 import { firestorePlugin } from 'vuefire'
 import firebase from 'firebase'
 
+const { Timestamp } = firebase.firestore
+export { Timestamp }
+
 Vue.use(firestorePlugin)
 Vue.use(firebase)
 

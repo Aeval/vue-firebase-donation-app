@@ -74,6 +74,7 @@
 
 <script>
 import { db } from './Donations'
+import { Timestamp } from '../main'
 
 export default {
   name: "NewDonation",
@@ -85,7 +86,7 @@ export default {
       email: '',
       phone: '',
       donationAmt: '',
-      newsletter: '',
+      newsletter: Boolean,
 
     };
   },
@@ -94,18 +95,25 @@ export default {
   },
   methods:{
       addDonation() {
+        const form = document.querySelector('form');
+        const now = new Date();
+
         const donation = {
           donation_name: this.name,
           donation_email: this.email,
           donation_phone: this.phone,
           donation_amount: parseInt(this.donationAmt, 10),
-          newsletter: this.newsletter
+          newsletter: this.newsletter,
+          created_at: Timestamp.fromDate(now)
+
         }
 
-        console.log(donation)
-          db.collection('donations').add(donation)
-            .then(docRef => console.log(`Doc written with ID ${docRef.id}`))
-            .catch(err => console.log(err))
+        db.collection('donations').add(donation)
+          .then(docRef => console.log(`Doc written with ID ${docRef.id}`))
+          .catch(err => console.log(err))
+
+        form.reset();
+        this.modalVisible = false;
       }
   },
   watch: {
@@ -113,10 +121,8 @@ export default {
       this.modalVisible = !this.modalVisible;
     },
   },
-  created: {
-    checkDonations() {
-      console.log('Nothing yet')
-    }
+  created() {
+
   }
 };
 </script>
