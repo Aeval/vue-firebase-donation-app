@@ -1,62 +1,40 @@
 <template>
   <div>
     <ul class="donations-list">
-      <li class="container mt-2">
-        <div class="donation-row row mx-auto my-1 rounded hover">
+      <li class="container mt-2" v-bind:key="donation.id" v-for="donation in donations">
+        <div v-bind:style="[donation.donation_amount > 100 ? {'background-color': '#D4AF37'} : {'background-color': '#42b983'}]" class="donation-row row mx-auto my-1 rounded hover">
           <div class="col-2 my-2 text-left">
             <img src="../assets/party-popper.png" alt="party icon" height="50px" width="50px">
           </div>
-          <p class="col my-auto">Zackary Fisher</p>
-          <p class="col my-auto">$55,000</p>
-        </div>    
-      </li>
-      <li class="container">
-        <div class="donation-row row mx-auto my-1 rounded hover">
-          <div class="col-2 my-2 text-left">
-            <img src="../assets/party-popper.png" alt="party icon" height="50px" width="50px">
-          </div>
-          <p class="col my-auto">Zackary Fisher</p>
-          <p class="col my-auto">$55,000</p>
-        </div>    
-      </li>
-      <li class="container">
-        <div class="donation-row row mx-auto my-1 rounded hover">
-          <div class="col-2 my-2 text-left">
-            <img src="../assets/party-popper.png" alt="party icon" height="50px" width="50px">
-          </div>
-          <p class="col my-auto">Zackary Fisher</p>
-          <p class="col my-auto">$55,000</p>
-        </div>    
-      </li>
-      <li class="container">
-        <div class="donation-row row mx-auto my-1 rounded hover">
-          <div class="col-2 my-2 text-left">
-            <img src="../assets/party-popper.png" alt="party icon" height="50px" width="50px">
-          </div>
-          <p class="col my-auto">Zackary Fisher</p>
-          <p class="col my-auto">$55,000</p>
-        </div>    
-      </li>
-      <li class="container">
-        <div class="donation-row row mx-auto my-1 rounded hover">
-          <div class="col-2 my-2 text-left">
-            <img src="../assets/party-popper.png" alt="party icon" height="50px" width="50px">
-          </div>
-          <p class="col my-auto">Zackary Fisher</p>
-          <p class="col my-auto">$55,000</p>
-        </div>    
+          <p class="col my-auto">{{donation.donation_name}}</p>
+          <p class="col my-auto">${{donation.donation_amount}}</p>
+        </div>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import firebase from 'firebase'
+
+export const db = firebase
+  .initializeApp({projectId: "vue-donation"})
+  .firestore();
+
 export default {
   name: 'Donations',
   data() {
     return {
-
+      donations: []
     }
+  },
+  firebase: {
+    donations: db.collection('donations')
+  },
+  created() {
+    this.$bind('donations', db.collection('donations'))
+      .then(donations => this.donations = donations)
+      .catch(err => console.log(err));
   }
 }
 </script>

@@ -64,7 +64,7 @@
               <input type="checkbox" class="custom-control-input" id="customControlInline" v-model="newsletter"/>
               <label class="custom-control-label" for="customControlInline">Sign me up for the newsletter!</label>
             </div>
-            <button @click="doSomething" type="submit" class="btn btn-lg btn-success my-2">Donate</button>
+            <button @click.prevent="addDonation" type="submit" class="btn btn-lg btn-success my-2">Donate</button>
           </form>
         </div>
       </div>
@@ -73,6 +73,8 @@
 </template>
 
 <script>
+import { db } from './Donations'
+
 export default {
   name: "NewDonation",
   props: ["visible"],
@@ -83,16 +85,27 @@ export default {
       email: '',
       phone: '',
       donationAmt: '',
-      newsletter: ''
+      newsletter: '',
+
     };
   },
+  firestore: {
+    
+  },
   methods:{
-      doSomething() {
-          fetch('process.php?action=read', {
-              method: 'POST'
-          })
-          .then(res => console.log(res))
-          .catch(err => console.log(err))
+      addDonation() {
+        const donation = {
+          donation_name: this.name,
+          donation_email: this.email,
+          donation_phone: this.phone,
+          donation_amount: parseInt(this.donationAmt, 10),
+          newsletter: this.newsletter
+        }
+
+        console.log(donation)
+          db.collection('donations').add(donation)
+            .then(docRef => console.log(`Doc written with ID ${docRef.id}`))
+            .catch(err => console.log(err))
       }
   },
   watch: {
@@ -100,6 +113,11 @@ export default {
       this.modalVisible = !this.modalVisible;
     },
   },
+  created: {
+    checkDonations() {
+      console.log('Nothing yet')
+    }
+  }
 };
 </script>
 
