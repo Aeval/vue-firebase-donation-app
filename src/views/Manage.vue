@@ -1,6 +1,6 @@
 <template>
   <div class="home container-fluid">
-    <router-link to="/manage"><i class="fas fa-home float-right pt-3 text-muted"></i></router-link>
+    <router-link to="/"><i class="fas fa-home float-right pt-3 text-muted"></i></router-link>
     <h2 class="pt-5">Manage Your Donations</h2>
     <h4 class="mb-5"><small class="text-muted">Track, edit or delete donation records</small></h4>
     <ManagedDonations />
