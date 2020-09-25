@@ -19,9 +19,10 @@
                 placeholder="e.g. 'Bob Ross', 'Pope Francis',..."
                 v-model="name"
               />
-              <small
-                class="form-text text-muted text-left ml-1"
-              >This will be what displays on that fun list you just saw!</small>
+              <small class="form-text text-muted text-left ml-1"
+                >This will be what displays on that fun list you just
+                saw!</small
+              >
             </div>
             <div class="form-group text-left">
               <label for="email">Email Address</label>
@@ -32,9 +33,9 @@
                 placeholder="generous.donator@gmail.com"
                 v-model="email"
               />
-              <small
-                class="form-text text-muted text-left ml-1"
-              >This will stay with us and no one else!</small>
+              <small class="form-text text-muted text-left ml-1"
+                >This will stay with us and no one else!</small
+              >
             </div>
             <div class="form-group text-left">
               <label for="phone">Phone</label>
@@ -54,17 +55,36 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text">$</div>
                 </div>
-                <input type="number" class="form-control" placeholder="e.g. '5', '10', '15', ..." v-model="donationAmt"/>
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="e.g. '5', '10', '15', ..."
+                  v-model="donationAmt"
+                />
               </div>
-              <small
-                class="form-text text-muted text-left ml-1"
-              >You will be redirected to Paypal's secure servers to complete the transaction.</small>
+              <small class="form-text text-muted text-left ml-1"
+                >You will be redirected to Paypal's secure servers to complete
+                the transaction.</small
+              >
             </div>
             <div class="custom-control custom-checkbox my-1 mr-sm-2">
-              <input type="checkbox" class="custom-control-input" id="customControlInline" v-model="newsletter"/>
-              <label class="custom-control-label" for="customControlInline">Sign me up for the newsletter!</label>
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="customControlInline"
+                v-model="newsletter"
+              />
+              <label class="custom-control-label" for="customControlInline"
+                >Sign me up for the newsletter!</label
+              >
             </div>
-            <button @click.prevent="addDonation" type="submit" class="btn btn-lg btn-success my-2">Donate</button>
+            <button
+              @click.prevent="addDonation"
+              type="submit"
+              class="btn btn-lg btn-success my-2"
+            >
+              Donate
+            </button>
           </form>
         </div>
       </div>
@@ -73,8 +93,8 @@
 </template>
 
 <script>
-import { db } from './Donations'
-import { Timestamp } from '../main'
+import { db } from "./Donations";
+import { Timestamp } from "../main";
 
 export default {
   name: "NewDonation",
@@ -82,48 +102,43 @@ export default {
   data() {
     return {
       modalVisible: false,
-      name: '',
-      email: '',
-      phone: '',
-      donationAmt: '',
+      name: "",
+      email: "",
+      phone: "",
+      donationAmt: "",
       newsletter: Boolean,
-
     };
   },
-  firestore: {
-    
-  },
-  methods:{
-      addDonation() {
-        const form = document.querySelector('form');
-        const now = new Date();
+  firestore: {},
+  methods: {
+    addDonation() {
+      const form = document.querySelector("form");
+      const now = new Date();
 
-        const donation = {
-          donation_name: this.name,
-          donation_email: this.email,
-          donation_phone: this.phone,
-          donation_amount: parseInt(this.donationAmt, 10),
-          newsletter: this.newsletter,
-          created_at: Timestamp.fromDate(now)
+      const donation = {
+        donation_name: this.name,
+        donation_email: this.email,
+        donation_phone: this.phone,
+        donation_amount: parseInt(this.donationAmt, 10),
+        newsletter: this.newsletter,
+        created_at: Timestamp.fromDate(now),
+      };
 
-        }
+      db.collection("donations")
+        .add(donation)
+        .then((docRef) => console.log(`Doc written with ID ${docRef.id}`))
+        .catch((err) => console.log(err));
 
-        db.collection('donations').add(donation)
-          .then(docRef => console.log(`Doc written with ID ${docRef.id}`))
-          .catch(err => console.log(err))
-
-        form.reset();
-        this.modalVisible = false;
-      }
+      form.reset();
+      this.modalVisible = false;
+    },
   },
   watch: {
     visible: function () {
       this.modalVisible = !this.modalVisible;
     },
   },
-  created() {
-
-  }
+  created() {},
 };
 </script>
 

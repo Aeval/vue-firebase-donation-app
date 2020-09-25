@@ -47,11 +47,21 @@
             <form>
               <div class="form-group text-left">
                 <label for="name">Name</label>
-                <input class="form-control" type="text" name="name" v-model="name" />
+                <input
+                  class="form-control"
+                  type="text"
+                  name="name"
+                  v-model="name"
+                />
               </div>
               <div class="form-group text-left">
                 <label for="email">Email Address</label>
-                <input class="form-control" type="text" name="email" v-model="email" />
+                <input
+                  class="form-control"
+                  type="text"
+                  name="email"
+                  v-model="email"
+                />
               </div>
               <div class="form-group text-left">
                 <label for="phone">Phone</label>
@@ -70,7 +80,11 @@
                   <div class="input-group-prepend">
                     <div class="input-group-text">$</div>
                   </div>
-                  <input type="number" class="form-control" v-model="donationAmt" />
+                  <input
+                    type="number"
+                    class="form-control"
+                    v-model="donationAmt"
+                  />
                 </div>
               </div>
               <div class="custom-control custom-checkbox my-1 mr-sm-2">
@@ -80,13 +94,17 @@
                   id="customControlInline"
                   v-model="newsletter"
                 />
-                <label class="custom-control-label" for="customControlInline">Enroll in Newsletter?</label>
+                <label class="custom-control-label" for="customControlInline"
+                  >Enroll in Newsletter?</label
+                >
               </div>
               <button
                 @click.prevent="editDonation"
                 type="submit"
                 class="btn btn-lg btn-success my-2"
-              >Confirm</button>
+              >
+                Confirm
+              </button>
             </form>
           </div>
         </div>
