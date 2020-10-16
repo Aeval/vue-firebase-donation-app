@@ -1,4 +1,4 @@
-# donation_platform_vue-php
+# vue-firebase-donation-app
 
 ## Project setup
 ```
